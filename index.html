@@ -39,20 +39,62 @@
     padding:18px 48px;
     display:flex;align-items:center;justify-content:space-between;
   }
-  .logo{display:flex;align-items:center;gap:10px;}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
   .logo-mark{
     width:34px;height:34px;border-radius:8px;
     background:var(--verde-profundo);
     display:flex;align-items:center;justify-content:center;
     color:var(--dorado);font-family:'Fraunces',serif;font-weight:700;font-size:18px;
   }
-  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:20px;letter-spacing:-0.02em;}
+  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:20px;letter-spacing:-0.02em;color:var(--grafito);}
   .logo-text span{color:var(--dorado);}
-  .nav-links{display:flex;gap:36px;font-size:14px;font-weight:500;color:var(--gris-texto);}
+  .nav-links{display:flex;gap:36px;font-size:14px;font-weight:500;}
+  .nav-links a{
+    color:var(--gris-texto);text-decoration:none;
+    transition:color 0.2s;position:relative;padding-bottom:3px;
+  }
+  .nav-links a:hover{color:var(--verde-profundo);}
+  .nav-links a.active{color:var(--verde-profundo);}
+  .nav-links a.active::after{
+    content:"";position:absolute;bottom:0;left:0;right:0;
+    height:2px;background:var(--dorado);border-radius:2px;
+  }
   .nav-cta{
     background:var(--verde-profundo);color:var(--crema);
     padding:10px 22px;border-radius:7px;font-size:14px;font-weight:600;
-    border:none;cursor:pointer;
+    border:none;cursor:pointer;transition:background 0.2s;
+  }
+  .nav-cta:hover{background:var(--verde-suave);}
+
+  /* hamburger */
+  .hamburger{
+    display:none;flex-direction:column;gap:5px;cursor:pointer;
+    background:none;border:none;padding:4px;
+  }
+  .hamburger span{
+    display:block;width:22px;height:2px;
+    background:var(--verde-profundo);border-radius:2px;
+    transition:transform 0.25s, opacity 0.25s;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  /* mobile nav panel */
+  .mobile-nav{
+    display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+    background:var(--crema);z-index:99;
+    flex-direction:column;align-items:center;justify-content:center;gap:36px;
+  }
+  .mobile-nav.open{display:flex;}
+  .mobile-nav a{
+    font-family:'Fraunces',serif;font-size:28px;font-weight:600;
+    color:var(--verde-profundo);text-decoration:none;
+  }
+  .mobile-nav a:hover{color:var(--dorado);}
+  .mobile-nav .mobile-cta{
+    margin-top:10px;background:var(--verde-profundo);color:var(--crema);
+    padding:14px 36px;border-radius:8px;font-size:16px;font-weight:600;border:none;cursor:pointer;
   }
 
   /* ---------- HERO ---------- */
@@ -277,6 +319,84 @@
   }
   .price-card.featured .price-btn{background:var(--dorado);color:var(--verde-profundo);}
 
+  /* ---------- DEMO MODAL ---------- */
+  .modal-overlay{
+    display:none;position:fixed;inset:0;z-index:200;
+    background:rgba(15,61,46,0.65);backdrop-filter:blur(4px);
+    align-items:center;justify-content:center;
+    animation:fadeIn 0.2s ease;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-box{
+    background:#fff;border-radius:18px;
+    width:min(900px,95vw);height:min(90vh,760px);
+    display:flex;flex-direction:column;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,0.45);
+    overflow:hidden;
+  }
+  .modal-header{
+    background:var(--verde-profundo);padding:18px 24px;
+    display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  }
+  .modal-title{
+    font-family:'Fraunces',serif;font-size:17px;font-weight:600;
+    color:var(--crema);display:flex;align-items:center;gap:10px;
+  }
+  .modal-title .badge{
+    background:var(--dorado);color:var(--verde-profundo);
+    font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;
+    font-family:'Inter',sans-serif;letter-spacing:0.04em;
+  }
+  .modal-actions{display:flex;align-items:center;gap:10px;}
+  .modal-download{
+    background:var(--dorado);color:var(--verde-profundo);
+    padding:8px 18px;border-radius:7px;font-size:13px;font-weight:700;
+    border:none;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px;
+    transition:background 0.2s;
+  }
+  .modal-download:hover{background:var(--dorado-suave);}
+  .modal-close{
+    background:rgba(255,255,255,0.12);border:none;color:#fff;
+    width:32px;height:32px;border-radius:50%;cursor:pointer;
+    font-size:18px;display:flex;align-items:center;justify-content:center;
+    transition:background 0.2s;
+  }
+  .modal-close:hover{background:rgba(255,255,255,0.25);}
+  .modal-body{flex:1;overflow:hidden;}
+  .modal-body iframe{width:100%;height:100%;border:none;display:block;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--verde-profundo);color:var(--crema);
+    padding:48px 48px 36px;margin-top:20px;
+  }
+  .footer-inner{
+    max-width:1280px;margin:0 auto;
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;
+  }
+  .footer-brand .logo-text{color:var(--crema);}
+  .footer-brand p{
+    color:#B8C0B0;font-size:13.5px;line-height:1.6;margin-top:14px;max-width:240px;
+  }
+  .footer-col h4{
+    font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--dorado);margin-bottom:16px;
+  }
+  .footer-col a{
+    display:block;color:#B8C0B0;font-size:13.5px;text-decoration:none;
+    margin-bottom:10px;transition:color 0.2s;
+  }
+  .footer-col a:hover{color:var(--crema);}
+  .footer-bottom{
+    max-width:1280px;margin:32px auto 0;
+    border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;color:#6A7568;
+  }
+  .footer-bottom .mono{color:var(--dorado);}
+
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
   /* ---------- FOOTER NOTE ---------- */
   .footer-note{
     text-align:center;padding:50px 48px 70px;color:var(--gris-texto);font-size:13px;
@@ -286,27 +406,67 @@
   @media(max-width:900px){
     .hero,.diaspora,.backoffice{grid-template-columns:1fr;}
     .grid-3,.pricing-grid{grid-template-columns:1fr;}
-    .nav-links{display:none;}
+    .nav-links,.nav-cta{display:none;}
+    .hamburger{display:flex;}
     section{padding:60px 24px;}
     .hero{padding:50px 24px;}
+    nav{padding:16px 24px;}
+    .footer-inner{grid-template-columns:1fr 1fr;gap:32px;}
+    .modal-box{height:95vh;}
+  }
+  @media(max-width:480px){
+    .footer-inner{grid-template-columns:1fr;}
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">
+  <a href="#" class="logo">
     <div class="logo-mark">V</div>
     <div class="logo-text">Inmo<span>Vault</span></div>
-  </div>
+  </a>
   <div class="nav-links">
-    <span>Catálogo</span>
-    <span>Para inversionistas</span>
-    <span>Para inmobiliarias</span>
-    <span>Precios</span>
+    <a href="#catalogo">Catálogo</a>
+    <a href="#diaspora">Para inversionistas</a>
+    <a href="#crm">Para inmobiliarias</a>
+    <a href="#precios">Precios</a>
   </div>
-  <button class="nav-cta">Solicitar demo</button>
+  <button class="nav-cta" onclick="openDemo()">Solicitar demo</button>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile nav panel -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#catalogo" onclick="closeMenu()">Catálogo</a>
+  <a href="#diaspora" onclick="closeMenu()">Para inversionistas</a>
+  <a href="#crm" onclick="closeMenu()">Para inmobiliarias</a>
+  <a href="#precios" onclick="closeMenu()">Precios</a>
+  <button class="mobile-cta" onclick="closeMenu();openDemo()">Solicitar demo</button>
+</div>
+
+<!-- Demo modal -->
+<div class="modal-overlay" id="demoModal" onclick="handleOverlayClick(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">
+        Propuesta de Negocio · InmoVault
+        <span class="badge">CONFIDENCIAL</span>
+      </div>
+      <div class="modal-actions">
+        <a href="propuesta-inmovault.pdf" download class="modal-download">
+          ↓ Descargar PDF
+        </a>
+        <button class="modal-close" onclick="closeDemo()" aria-label="Cerrar">×</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <iframe src="propuesta-inmovault.pdf#toolbar=1&navpanes=0" title="Propuesta InmoVault"></iframe>
+    </div>
+  </div>
+</div>
 
 <section class="hero">
   <div>
@@ -314,8 +474,8 @@
     <h1>Tu inventario, <em>visible</em><br>para quien de verdad<br>puede comprarlo.</h1>
     <p>InmoVault convierte el catálogo de tu inmobiliaria en una experiencia confiable para compradores locales y para la diáspora venezolana que invierte desde el exterior.</p>
     <div class="hero-buttons">
-      <button class="btn-primary">Ver catálogo en vivo →</button>
-      <button class="btn-secondary">Cómo funciona</button>
+      <button class="btn-primary" onclick="location.href='#catalogo'">Ver catálogo en vivo →</button>
+      <button class="btn-secondary" onclick="location.href='#diaspora'">Cómo funciona</button>
     </div>
     <div class="hero-stats">
       <div>
@@ -524,7 +684,7 @@
         <div><span class="check">✓</span> Panel de leads básico</div>
         <div><span class="check">✓</span> Soporte por correo</div>
       </div>
-      <button class="price-btn">Elegir Básico</button>
+      <button class="price-btn" onclick="openDemo()">Elegir Básico</button>
     </div>
 
     <div class="price-card featured">
@@ -540,7 +700,7 @@
         <div><span class="check">✓</span> CRM completo + WhatsApp</div>
         <div><span class="check">✓</span> Soporte prioritario</div>
       </div>
-      <button class="price-btn">Elegir Pro</button>
+      <button class="price-btn" onclick="openDemo()">Elegir Pro</button>
     </div>
 
     <div class="price-card">
@@ -554,14 +714,101 @@
         <div><span class="check">✓</span> Integraciones personalizadas</div>
         <div><span class="check">✓</span> Gerente de cuenta dedicado</div>
       </div>
-      <button class="price-btn">Conversemos</button>
+      <button class="price-btn" onclick="openDemo()">Conversemos</button>
     </div>
   </div>
 </section>
 
-<div class="footer-note">
-  Mockup de presentación · InmoVault — <span class="mono">no es un producto en producción, es la propuesta de concepto</span>
-</div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="margin-bottom:0;">
+        <div class="logo-mark">V</div>
+        <div class="logo-text">Inmo<span>Vault</span></div>
+      </a>
+      <p>El catálogo digital verificado para el mercado inmobiliario venezolano y su diáspora.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="#catalogo">Catálogo en vivo</a>
+      <a href="#diaspora">Para inversionistas</a>
+      <a href="#crm">Para inmobiliarias</a>
+      <a href="#precios">Precios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="propuesta-inmovault.pdf" download>Propuesta de negocio</a>
+      <a href="#" onclick="openDemo();return false;">Solicitar demo</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="mailto:ezeram94@gmail.com">ezeram94@gmail.com</a>
+      <a href="#precios" style="margin-top:16px;display:inline-block;">
+        <button class="nav-cta" style="display:inline-block;">Solicitar demo →</button>
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 InmoVault. Todos los derechos reservados.</span>
+    <span class="mono">Propuesta de concepto — no es un producto en producción</span>
+  </div>
+</footer>
+
+<script>
+// ── Modal demo ───────────────────────────────────────────────────────────────
+function openDemo(){
+  document.getElementById('demoModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeDemo(){
+  document.getElementById('demoModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('demoModal')) closeDemo();
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape') closeDemo();
+});
+
+// ── Mobile menu ──────────────────────────────────────────────────────────────
+function toggleMenu(){
+  const btn=document.getElementById('hamburger');
+  const panel=document.getElementById('mobileNav');
+  btn.classList.toggle('open');
+  panel.classList.toggle('open');
+  document.body.style.overflow=panel.classList.contains('open')?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+// ── Active nav link on scroll ────────────────────────────────────────────────
+(function(){
+  const sections=['catalogo','diaspora','crm','precios'];
+  const links=document.querySelectorAll('.nav-links a');
+  const map={};
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) map[id]=el;
+  });
+
+  function onScroll(){
+    const scrollY=window.scrollY+120;
+    let current='';
+    sections.forEach(id=>{
+      if(map[id] && map[id].offsetTop<=scrollY) current=id;
+    });
+    links.forEach(a=>{
+      a.classList.toggle('active', a.getAttribute('href')==='#'+current);
+    });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
 
 </body>
 </html>
