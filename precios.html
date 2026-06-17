@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planes y Precios · InmoVault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --verde-profundo:#0F3D2E;--verde-suave:#1B5440;--dorado:#C9A368;
+    --dorado-suave:#E8D5B0;--crema:#FAF7F0;--grafito:#1A1A1A;--gris-texto:#5C5750;--linea:#E5DFD2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;background:var(--crema);color:var(--grafito);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',serif;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:100;background:rgba(250,247,240,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--linea);padding:18px 48px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .logo-mark{width:34px;height:34px;border-radius:8px;background:var(--verde-profundo);display:flex;align-items:center;justify-content:center;color:var(--dorado);font-family:'Fraunces',serif;font-weight:700;font-size:18px;}
+  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:20px;letter-spacing:-0.02em;color:var(--grafito);}
+  .logo-text span{color:var(--dorado);}
+  .nav-links{display:flex;gap:36px;font-size:14px;font-weight:500;}
+  .nav-links a{color:var(--gris-texto);text-decoration:none;transition:color 0.2s;padding-bottom:3px;position:relative;}
+  .nav-links a:hover{color:var(--verde-profundo);}
+  .nav-links a.current{color:var(--verde-profundo);}
+  .nav-links a.current::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--dorado);border-radius:2px;}
+  .nav-cta{background:var(--verde-profundo);color:var(--crema);padding:10px 22px;border-radius:7px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:background 0.2s;}
+  .nav-cta:hover{background:var(--verde-suave);}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;min-width:44px;min-height:44px;align-items:center;justify-content:center;}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--verde-profundo);border-radius:2px;transition:transform 0.25s,opacity 0.25s;}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-nav{display:none;position:fixed;inset:0;background:var(--crema);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:36px;}
+  .mobile-nav.open{display:flex;}
+  .mobile-nav a{font-family:'Fraunces',serif;font-size:28px;font-weight:600;color:var(--verde-profundo);text-decoration:none;}
+  .mobile-nav .mobile-cta{margin-top:10px;background:var(--verde-profundo);color:var(--crema);padding:14px 36px;border-radius:8px;font-size:16px;font-weight:600;border:none;cursor:pointer;}
+
+  /* HERO */
+  .hero{text-align:center;padding:72px 48px 60px;max-width:1280px;margin:0 auto;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dorado);font-weight:500;display:inline-flex;align-items:center;gap:10px;margin-bottom:18px;}
+  .eyebrow::before,.eyebrow::after{content:"";width:20px;height:1px;background:var(--dorado);}
+  .hero h1{font-size:46px;font-weight:600;color:var(--verde-profundo);line-height:1.1;letter-spacing:-0.02em;margin-bottom:16px;}
+  .hero p{font-size:17px;color:var(--gris-texto);max-width:500px;margin:0 auto 32px;line-height:1.6;}
+  .trial-badge{display:inline-flex;align-items:center;gap:8px;background:#EDF4F0;border:1px solid #C2D8CC;padding:10px 20px;border-radius:20px;font-size:14px;color:var(--verde-profundo);font-weight:600;}
+  .trial-badge span{color:var(--dorado);}
+
+  /* PRICING GRID */
+  .pricing-section{max-width:1180px;margin:0 auto;padding:0 48px 80px;}
+  .billing-toggle{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:44px;}
+  .billing-toggle span{font-size:14px;font-weight:600;color:var(--gris-texto);}
+  .billing-toggle span.active-billing{color:var(--verde-profundo);}
+  .toggle-track{width:44px;height:24px;background:var(--linea);border-radius:12px;position:relative;cursor:pointer;transition:background 0.2s;}
+  .toggle-track.on{background:var(--verde-profundo);}
+  .toggle-knob{width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.15);}
+  .toggle-track.on .toggle-knob{transform:translateX(20px);}
+  .save-tag{background:var(--dorado);color:var(--verde-profundo);font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
+
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .price-card{background:#fff;border-radius:18px;border:1px solid var(--linea);padding:36px 28px;position:relative;display:flex;flex-direction:column;}
+  .price-card.featured{background:var(--verde-profundo);color:var(--crema);border-color:var(--verde-profundo);transform:scale(1.035);}
+  .price-card.featured .price-card-desc,.price-card.featured .price-card-period{color:#C5CFC2;}
+  .featured-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--dorado);color:var(--verde-profundo);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:0.02em;white-space:nowrap;}
+  .price-card-name{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#8A8470;margin-bottom:16px;}
+  .price-card.featured .price-card-name{color:var(--dorado);}
+  .price-card-amount{font-family:'Fraunces',serif;font-size:40px;font-weight:700;margin-bottom:2px;line-height:1;}
+  .price-card-amount sup{font-size:20px;vertical-align:super;font-weight:600;}
+  .price-card-period{font-size:13px;color:var(--gris-texto);margin-bottom:20px;}
+  .price-card-desc{font-size:13.5px;color:var(--gris-texto);margin-bottom:24px;line-height:1.55;flex:1;}
+  .price-feature-list{display:flex;flex-direction:column;gap:11px;margin-bottom:28px;}
+  .price-feature-list li{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;list-style:none;}
+  .check{color:var(--verde-profundo);font-weight:700;flex-shrink:0;font-size:13px;}
+  .price-card.featured .check{color:var(--dorado);}
+  .price-btn{width:100%;padding:14px;border-radius:8px;font-weight:700;font-size:14.5px;text-align:center;border:none;cursor:pointer;transition:all 0.2s;text-decoration:none;display:block;}
+  .price-btn-primary{background:var(--verde-profundo);color:var(--crema);}
+  .price-btn-primary:hover{background:var(--verde-suave);}
+  .price-card.featured .price-btn-primary{background:var(--dorado);color:var(--verde-profundo);}
+  .price-card.featured .price-btn-primary:hover{background:var(--dorado-suave);}
+  .price-btn-outline{background:transparent;color:var(--verde-profundo);border:1.5px solid var(--linea);}
+  .price-btn-outline:hover{border-color:var(--verde-profundo);background:var(--crema);}
+
+  /* COMPARISON TABLE */
+  .compare-section{max-width:1180px;margin:0 auto;padding:0 48px 80px;}
+  .compare-section h2{font-size:28px;color:var(--verde-profundo);margin-bottom:32px;text-align:center;}
+  .compare-table{width:100%;border-collapse:collapse;font-size:14px;}
+  .compare-table th{padding:14px 20px;text-align:center;font-weight:700;font-size:13px;background:var(--verde-profundo);color:var(--crema);}
+  .compare-table th:first-child{text-align:left;background:var(--verde-profundo);}
+  .compare-table th.col-featured{background:var(--verde-suave);color:var(--dorado);}
+  .compare-table td{padding:13px 20px;border-bottom:1px solid var(--linea);vertical-align:middle;}
+  .compare-table td:not(:first-child){text-align:center;}
+  .compare-table tr:last-child td{border-bottom:none;}
+  .compare-table tbody tr:nth-child(even) td{background:rgba(250,247,240,0.6);}
+  .compare-table td:first-child{font-weight:500;color:var(--grafito);}
+  .yes{color:var(--verde-profundo);font-size:16px;}
+  .no{color:#CCBFB5;font-size:16px;}
+  .col-featured-cell{background:rgba(15,61,46,0.04);}
+
+  /* FAQ */
+  .faq-section{max-width:760px;margin:0 auto;padding:0 48px 80px;}
+  .faq-section h2{font-size:28px;color:var(--verde-profundo);margin-bottom:32px;text-align:center;}
+  .faq-item{border-bottom:1px solid var(--linea);}
+  .faq-q{width:100%;text-align:left;padding:20px 0;background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:600;color:var(--grafito);}
+  .faq-q:hover{color:var(--verde-profundo);}
+  .faq-icon{font-size:20px;color:var(--dorado);flex-shrink:0;transition:transform 0.2s;}
+  .faq-item.open .faq-icon{transform:rotate(45deg);}
+  .faq-a{display:none;padding-bottom:18px;font-size:14.5px;color:var(--gris-texto);line-height:1.7;}
+  .faq-item.open .faq-a{display:block;}
+
+  /* CTA STRIP */
+  .cta-strip{background:var(--verde-profundo);padding:64px 48px;text-align:center;}
+  .cta-strip h2{font-family:'Fraunces',serif;font-size:32px;color:var(--crema);margin-bottom:12px;}
+  .cta-strip p{color:#B8C0B0;font-size:16px;margin-bottom:28px;}
+  .cta-strip-btns{display:flex;gap:14px;justify-content:center;}
+  .btn-cta-white{background:#fff;color:var(--verde-profundo);padding:14px 28px;border-radius:8px;font-size:15px;font-weight:700;border:none;cursor:pointer;transition:background 0.2s;text-decoration:none;}
+  .btn-cta-white:hover{background:var(--crema);}
+  .btn-cta-outline{background:transparent;color:#fff;padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;border:1.5px solid rgba(255,255,255,0.3);cursor:pointer;transition:border-color 0.2s;text-decoration:none;}
+  .btn-cta-outline:hover{border-color:#fff;}
+
+  /* DEMO MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(15,61,46,0.65);backdrop-filter:blur(4px);align-items:center;justify-content:center;}
+  .modal-overlay.open{display:flex;}
+  .modal-box{background:#fff;border-radius:18px;width:min(900px,95vw);height:min(90vh,760px);display:flex;flex-direction:column;box-shadow:0 40px 80px -20px rgba(0,0,0,0.45);overflow:hidden;}
+  .modal-header{background:var(--verde-profundo);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+  .modal-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--crema);display:flex;align-items:center;gap:10px;}
+  .modal-title .badge{background:var(--dorado);color:var(--verde-profundo);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;font-family:'Inter',sans-serif;}
+  .modal-actions{display:flex;align-items:center;gap:10px;}
+  .modal-download{background:var(--dorado);color:var(--verde-profundo);padding:8px 18px;border-radius:7px;font-size:13px;font-weight:700;border:none;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px;}
+  .modal-close{background:rgba(255,255,255,0.12);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
+  .modal-close:hover{background:rgba(255,255,255,0.25);}
+  .modal-body{flex:1;overflow:hidden;}
+  .modal-body iframe{width:100%;height:100%;border:none;display:block;}
+
+  /* FOOTER */
+  footer{background:var(--verde-profundo);color:var(--crema);padding:48px 48px 36px;}
+  .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;}
+  .footer-brand .logo-text{color:var(--crema);}
+  .footer-brand p{color:#B8C0B0;font-size:13.5px;line-height:1.6;margin-top:14px;max-width:240px;}
+  .footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dorado);margin-bottom:16px;}
+  .footer-col a{display:block;color:#B8C0B0;font-size:13.5px;text-decoration:none;margin-bottom:10px;transition:color 0.2s;}
+  .footer-col a:hover{color:var(--crema);}
+  .footer-bottom{max-width:1280px;margin:32px auto 0;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#6A7568;}
+
+  @media(max-width:900px){
+    .nav-links,.nav-cta{display:none;}
+    .hamburger{display:flex;}
+    nav{padding:16px 24px;}
+    .hero{padding:52px 24px 44px;}
+    .hero h1{font-size:34px;}
+    .pricing-section,.compare-section,.faq-section{padding-left:20px;padding-right:20px;}
+    .pricing-grid{grid-template-columns:1fr;gap:32px;}
+    .price-card.featured{transform:none;}
+    .compare-section{display:none;}
+    .footer-inner{grid-template-columns:1fr 1fr;gap:32px;}
+    .cta-strip{padding:48px 24px;}
+    .cta-strip-btns{flex-direction:column;align-items:center;}
+  }
+  @media(max-width:480px){
+    .footer-inner{grid-template-columns:1fr;}
+    .hero h1{font-size:28px;}
+    .billing-row{flex-wrap:wrap;gap:10px;}
+    .cta-strip-btns a,.cta-strip-btns button{width:100%;text-align:center;}
+    .faq-q{font-size:14px;padding:14px 16px;}
+    .pricing-section{padding-left:16px;padding-right:16px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">
+    <div class="logo-mark">V</div>
+    <div class="logo-text">Inmo<span>Vault</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="catalogo.html">Catálogo</a>
+    <a href="index.html#diaspora">Para inversionistas</a>
+    <a href="index.html#crm">Para inmobiliarias</a>
+    <a href="precios.html" class="current">Precios</a>
+  </div>
+  <button class="nav-cta" onclick="openDemo()">Solicitar demo</button>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="catalogo.html" onclick="closeMenu()">Catálogo</a>
+  <a href="index.html#diaspora" onclick="closeMenu()">Para inversionistas</a>
+  <a href="index.html#crm" onclick="closeMenu()">Para inmobiliarias</a>
+  <a href="precios.html" onclick="closeMenu()">Precios</a>
+  <button class="mobile-cta" onclick="closeMenu();openDemo()">Solicitar demo</button>
+</div>
+
+<div class="modal-overlay" id="demoModal" onclick="if(event.target===this)closeDemo()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">Propuesta de Negocio · InmoVault <span class="badge">CONFIDENCIAL</span></div>
+      <div class="modal-actions">
+        <a href="propuesta-inmovault.pdf" download class="modal-download">↓ Descargar PDF</a>
+        <button class="modal-close" onclick="closeDemo()">×</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <iframe src="propuesta-inmovault.pdf#toolbar=1&navpanes=0" title="Propuesta InmoVault"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="eyebrow">PLANES Y PRECIOS</div>
+  <h1>Un plan para cada<br>inmobiliaria</h1>
+  <p>Sin comisiones por venta ni contratos de permanencia. Pago mensual fijo, cancela cuando quieras.</p>
+  <div class="trial-badge">✓ <span>14 días gratis</span> en todos los planes · Sin tarjeta requerida</div>
+</div>
+
+<!-- PRICING CARDS -->
+<div class="pricing-section">
+  <div class="billing-toggle">
+    <span id="lbl-monthly" class="active-billing">Facturación mensual</span>
+    <div class="toggle-track" id="billingToggle" onclick="toggleBilling()">
+      <div class="toggle-knob"></div>
+    </div>
+    <span id="lbl-annual">Anual</span>
+    <span class="save-tag" id="saveTag" style="opacity:0.4">Ahorra 20%</span>
+  </div>
+
+  <div class="pricing-grid">
+    <!-- BÁSICO -->
+    <div class="price-card">
+      <div class="price-card-name">Básico</div>
+      <div class="price-card-amount"><sup>$</sup><span id="price-basico">149</span></div>
+      <div class="price-card-period" id="period-basico">por mes · facturado mensualmente</div>
+      <div class="price-card-desc">Catálogo digital con tu marca y gestión simple de contactos.</div>
+      <ul class="price-feature-list">
+        <li><span class="check">✓</span> Hasta 100 propiedades</li>
+        <li><span class="check">✓</span> App con tu logo y colores</li>
+        <li><span class="check">✓</span> Panel de leads básico</li>
+        <li><span class="check">✓</span> Soporte por correo</li>
+      </ul>
+      <a href="pago.html?plan=basico" class="price-btn price-btn-primary">Empezar gratis →</a>
+    </div>
+
+    <!-- PRO (featured) -->
+    <div class="price-card featured">
+      <div class="featured-tag">RECOMENDADO</div>
+      <div class="price-card-name">Pro</div>
+      <div class="price-card-amount"><sup>$</sup><span id="price-pro">399</span></div>
+      <div class="price-card-period" id="period-pro">por mes · facturado mensualmente</div>
+      <div class="price-card-desc">Todo lo necesario para captar al comprador en el exterior.</div>
+      <ul class="price-feature-list">
+        <li><span class="check">✓</span> Propiedades ilimitadas</li>
+        <li><span class="check">✓</span> Tours virtuales 360°</li>
+        <li><span class="check">✓</span> Reportes de verificación legal</li>
+        <li><span class="check">✓</span> CRM completo + WhatsApp</li>
+        <li><span class="check">✓</span> Soporte prioritario</li>
+      </ul>
+      <a href="pago.html?plan=pro" class="price-btn price-btn-primary">Empezar gratis →</a>
+    </div>
+
+    <!-- ENTERPRISE -->
+    <div class="price-card">
+      <div class="price-card-name">Enterprise</div>
+      <div class="price-card-amount" style="font-size:28px;padding-top:6px;">A medida</div>
+      <div class="price-card-period">contrato anual · precio personalizado</div>
+      <div class="price-card-desc">Para inmobiliarias con varias sucursales o marcas propias.</div>
+      <ul class="price-feature-list">
+        <li><span class="check">✓</span> Multi-sucursal y multi-agente</li>
+        <li><span class="check">✓</span> App propia en App Store / Google Play</li>
+        <li><span class="check">✓</span> Integraciones personalizadas</li>
+        <li><span class="check">✓</span> Gerente de cuenta dedicado</li>
+      </ul>
+      <a href="pago.html?plan=enterprise" class="price-btn price-btn-outline">Conversemos →</a>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="compare-section">
+  <h2>Comparación detallada</h2>
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th style="width:40%">Funcionalidad</th>
+        <th>Básico</th>
+        <th class="col-featured">Pro</th>
+        <th>Enterprise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Propiedades publicadas</td>
+        <td>Hasta 100</td>
+        <td class="col-featured-cell">Ilimitadas</td>
+        <td>Ilimitadas</td>
+      </tr>
+      <tr>
+        <td>App white-label (logo y colores propios)</td>
+        <td><span class="yes">✓</span></td>
+        <td class="col-featured-cell"><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Portal web propio</td>
+        <td><span class="yes">✓</span></td>
+        <td class="col-featured-cell"><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Panel de leads y CRM</td>
+        <td>Básico</td>
+        <td class="col-featured-cell">Completo</td>
+        <td>Completo</td>
+      </tr>
+      <tr>
+        <td>Integración WhatsApp Business</td>
+        <td><span class="no">—</span></td>
+        <td class="col-featured-cell"><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Tours virtuales 360°</td>
+        <td><span class="no">—</span></td>
+        <td class="col-featured-cell"><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Reporte de verificación legal</td>
+        <td><span class="no">—</span></td>
+        <td class="col-featured-cell"><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Analytics avanzado</td>
+        <td><span class="no">—</span></td>
+        <td class="col-featured-cell"><span class="yes">✓</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Multi-sucursal y multi-agente</td>
+        <td><span class="no">—</span></td>
+        <td class="col-featured-cell"><span class="no">—</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>App propia en App Store / Google Play</td>
+        <td><span class="no">—</span></td>
+        <td class="col-featured-cell"><span class="no">—</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Integraciones personalizadas</td>
+        <td><span class="no">—</span></td>
+        <td class="col-featured-cell"><span class="no">—</span></td>
+        <td><span class="yes">✓</span></td>
+      </tr>
+      <tr>
+        <td>Soporte</td>
+        <td>Correo</td>
+        <td class="col-featured-cell">Prioritario</td>
+        <td>Gerente dedicado</td>
+      </tr>
+      <tr>
+        <td>Prueba gratuita</td>
+        <td>14 días</td>
+        <td class="col-featured-cell">14 días</td>
+        <td>Demo personalizada</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <h2>Preguntas frecuentes</h2>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      ¿Hay contrato de permanencia?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">No. Los planes mensual (Básico y Pro) pueden cancelarse en cualquier momento sin penalidad. El plan Enterprise se contrata de forma anual porque incluye desarrollo personalizado e integración dedicada.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      ¿Cómo funciona la prueba gratuita de 14 días?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">Al registrarte accedes a todas las funciones del plan elegido durante 14 días sin costo. No se te cobra hasta que el período de prueba termine, y puedes cancelar antes sin ningún cargo. No se requiere tarjeta de crédito para iniciar.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      ¿Puedo cambiar de plan en cualquier momento?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">Sí. Puedes hacer upgrade o downgrade desde tu panel en cualquier momento. El cambio de plan se aplica inmediatamente y la diferencia de precio se prorratea en tu próxima factura.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      ¿Qué métodos de pago aceptan?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">Aceptamos tarjetas Visa, Mastercard y American Express. También transferencias bancarias para contratos anuales. Todos los pagos se procesan de forma segura con encriptación SSL/TLS.</div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-q" onclick="toggleFaq(this)">
+      ¿InmoVault aparece en la app de mi inmobiliaria?
+      <span class="faq-icon">+</span>
+    </button>
+    <div class="faq-a">No. La app y el portal son completamente white-label: llevan tu nombre, tu logo y tus colores. InmoVault es la tecnología detrás, invisible para tus clientes y agentes.</div>
+  </div>
+</div>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <h2>¿Tienes dudas? Hablemos.</h2>
+  <p>Un miembro del equipo puede mostrarte el producto en 20 minutos.</p>
+  <div class="cta-strip-btns">
+    <button class="btn-cta-white" onclick="openDemo()">Ver propuesta completa</button>
+    <a href="pago.html?plan=pro" class="btn-cta-outline">Empezar prueba gratuita →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">
+        <div class="logo-mark">V</div>
+        <div class="logo-text">Inmo<span>Vault</span></div>
+      </a>
+      <p>El catálogo digital verificado para el mercado inmobiliario venezolano y su diáspora.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Producto</h4>
+      <a href="catalogo.html">Catálogo en vivo</a>
+      <a href="index.html#diaspora">Para inversionistas</a>
+      <a href="index.html#crm">Para inmobiliarias</a>
+      <a href="precios.html">Precios</a>
+    </div>
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="propuesta-inmovault.pdf" download>Propuesta de negocio</a>
+      <a href="#" onclick="openDemo();return false;">Solicitar demo</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="mailto:hola@inmovault.com">hola@inmovault.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 InmoVault. Todos los derechos reservados.</span>
+    <span style="font-family:'JetBrains Mono',monospace;color:var(--dorado);">Propuesta de concepto</span>
+  </div>
+</footer>
+
+<script>
+let isAnnual = false;
+const prices = { basico: [149, 119], pro: [399, 319] };
+
+function toggleBilling() {
+  isAnnual = !isAnnual;
+  const track = document.getElementById('billingToggle');
+  track.classList.toggle('on', isAnnual);
+  document.getElementById('lbl-monthly').classList.toggle('active-billing', !isAnnual);
+  document.getElementById('lbl-annual').classList.toggle('active-billing', isAnnual);
+  document.getElementById('saveTag').style.opacity = isAnnual ? '1' : '0.4';
+  const suffix = isAnnual ? 'por mes · facturado anualmente' : 'por mes · facturado mensualmente';
+  document.getElementById('price-basico').textContent = prices.basico[isAnnual ? 1 : 0];
+  document.getElementById('price-pro').textContent    = prices.pro[isAnnual ? 1 : 0];
+  document.getElementById('period-basico').textContent = suffix;
+  document.getElementById('period-pro').textContent    = suffix;
+
+  // Update plan links to carry billing type
+  document.querySelector('a[href*="plan=basico"]').href = `pago.html?plan=basico&billing=${isAnnual?'anual':'mensual'}`;
+  document.querySelector('a[href*="plan=pro"]').href    = `pago.html?plan=pro&billing=${isAnnual?'anual':'mensual'}`;
+}
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+function toggleMenu() {
+  const btn = document.getElementById('hamburger');
+  const panel = document.getElementById('mobileNav');
+  btn.classList.toggle('open');
+  panel.classList.toggle('open');
+  document.body.style.overflow = panel.classList.contains('open') ? 'hidden' : '';
+}
+function closeMenu() {
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function openDemo() {
+  document.getElementById('demoModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDemo() {
+  document.getElementById('demoModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemo(); });
+</script>
+</body>
+</html>
