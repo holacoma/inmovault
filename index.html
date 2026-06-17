@@ -192,12 +192,15 @@
   }
   .pill.active{background:var(--verde-profundo);color:var(--crema);border-color:var(--verde-profundo);}
   .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .prop-card-link{text-decoration:none;color:inherit;display:block;}
   .prop-card{
     background:var(--crema-card);border-radius:16px;overflow:hidden;
-    border:1px solid var(--linea);transition:transform 0.2s;
+    border:1px solid var(--linea);transition:transform 0.2s,box-shadow 0.2s;
   }
+  .prop-card-link:hover .prop-card{transform:translateY(-4px);box-shadow:0 16px 40px -12px rgba(15,61,46,0.18);}
   .prop-img{height:200px;position:relative;overflow:hidden;}
-  .prop-img img{width:100%;height:100%;object-fit:cover;}
+  .prop-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
+  .prop-card-link:hover .prop-img img{transform:scale(1.04);}
   .prop-badge{
     position:absolute;top:12px;left:12px;background:var(--verde-profundo);color:var(--dorado-suave);
     font-size:10px;font-weight:700;padding:5px 10px;border-radius:20px;letter-spacing:0.02em;
@@ -212,6 +215,13 @@
   .prop-loc{font-size:13px;color:var(--gris-texto);margin-bottom:14px;}
   .prop-specs{display:flex;gap:16px;border-top:1px solid var(--linea);padding-top:14px;font-size:12.5px;color:var(--gris-texto);}
   .prop-specs span{font-weight:600;color:var(--grafito);}
+  .catalog-footer-row{display:flex;justify-content:center;margin-top:36px;}
+  .btn-catalog-all{
+    background:transparent;color:var(--verde-profundo);padding:13px 32px;
+    border-radius:8px;font-size:15px;font-weight:600;border:1.5px solid var(--verde-profundo);
+    cursor:pointer;transition:all 0.2s;
+  }
+  .btn-catalog-all:hover{background:var(--verde-profundo);color:var(--crema);}
 
   /* ---------- DIASPORA SECTION (signature) ---------- */
   .diaspora{
@@ -474,7 +484,7 @@
     <h1>Tu inventario, <em>visible</em><br>para quien de verdad<br>puede comprarlo.</h1>
     <p>InmoVault convierte el catálogo de tu inmobiliaria en una experiencia confiable para compradores locales y para la diáspora venezolana que invierte desde el exterior.</p>
     <div class="hero-buttons">
-      <button class="btn-primary" onclick="location.href='#catalogo'">Ver catálogo en vivo →</button>
+      <button class="btn-primary" onclick="location.href='catalogo.html'">Ver catálogo en vivo →</button>
       <button class="btn-secondary" onclick="location.href='#diaspora'">Cómo funciona</button>
     </div>
     <div class="hero-stats">
@@ -534,47 +544,57 @@
   </div>
 
   <div class="grid-3">
-    <div class="prop-card">
-      <div class="prop-img">
-        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500" alt="Casa">
-        <div class="prop-badge">✓ Título verificado</div>
-        <div class="prop-fav">♡</div>
+    <a href="propiedad.html?id=p1" class="prop-card-link">
+      <div class="prop-card">
+        <div class="prop-img">
+          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500" alt="Casa">
+          <div class="prop-badge">✓ Título verificado</div>
+          <div class="prop-fav">♡</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-price">$240,000</div>
+          <div class="prop-title">Casa 4H con jardín</div>
+          <div class="prop-loc">La Lagunita, Caracas</div>
+          <div class="prop-specs"><span>4</span> hab · <span>3</span> baños · <span>320</span> m²</div>
+        </div>
       </div>
-      <div class="prop-body">
-        <div class="prop-price">$240,000</div>
-        <div class="prop-title">Casa 4H con jardín</div>
-        <div class="prop-loc">La Lagunita, Caracas</div>
-        <div class="prop-specs"><span>4</span> hab · <span>3</span> baños · <span>320</span> m²</div>
-      </div>
-    </div>
+    </a>
 
-    <div class="prop-card">
-      <div class="prop-img">
-        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500" alt="Apartamento">
-        <div class="prop-badge">✓ Tour 360°</div>
-        <div class="prop-fav">♡</div>
+    <a href="propiedad.html?id=p2" class="prop-card-link">
+      <div class="prop-card">
+        <div class="prop-img">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=500" alt="Apartamento">
+          <div class="prop-badge">✓ Tour 360°</div>
+          <div class="prop-fav">♡</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-price">$98,500</div>
+          <div class="prop-title">Apartamento renovado</div>
+          <div class="prop-loc">Altamira, Caracas</div>
+          <div class="prop-specs"><span>2</span> hab · <span>2</span> baños · <span>110</span> m²</div>
+        </div>
       </div>
-      <div class="prop-body">
-        <div class="prop-price">$98,500</div>
-        <div class="prop-title">Apartamento renovado</div>
-        <div class="prop-loc">Altamira, Caracas</div>
-        <div class="prop-specs"><span>2</span> hab · <span>2</span> baños · <span>110</span> m²</div>
-      </div>
-    </div>
+    </a>
 
-    <div class="prop-card">
-      <div class="prop-img">
-        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=500" alt="Penthouse">
-        <div class="prop-badge">✓ Título verificado</div>
-        <div class="prop-fav">♡</div>
+    <a href="propiedad.html?id=p3" class="prop-card-link">
+      <div class="prop-card">
+        <div class="prop-img">
+          <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=500" alt="Penthouse">
+          <div class="prop-badge">✓ Título verificado</div>
+          <div class="prop-fav">♡</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-price">$410,000</div>
+          <div class="prop-title">Penthouse vista a la ciudad</div>
+          <div class="prop-loc">Country Club, Caracas</div>
+          <div class="prop-specs"><span>3</span> hab · <span>4</span> baños · <span>280</span> m²</div>
+        </div>
       </div>
-      <div class="prop-body">
-        <div class="prop-price">$410,000</div>
-        <div class="prop-title">Penthouse vista a la ciudad</div>
-        <div class="prop-loc">Country Club, Caracas</div>
-        <div class="prop-specs"><span>3</span> hab · <span>4</span> baños · <span>280</span> m²</div>
-      </div>
-    </div>
+    </a>
+  </div>
+
+  <div class="catalog-footer-row">
+    <button class="btn-catalog-all" onclick="location.href='catalogo.html'">Ver todas las propiedades →</button>
   </div>
 </section>
 
