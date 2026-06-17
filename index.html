@@ -433,14 +433,13 @@
 <body>
 
 <nav>
-  <a href="#" class="logo">
+  <a href="index.html" class="logo">
     <div class="logo-mark">V</div>
     <div class="logo-text">Inmo<span>Vault</span></div>
   </a>
   <div class="nav-links">
-    <a href="#catalogo">Catálogo</a>
-    <a href="#diaspora">Para inversionistas</a>
-    <a href="#crm">Para inmobiliarias</a>
+    <a href="index.html" class="active">Inicio</a>
+    <a href="catalogo.html">Catálogo</a>
     <a href="precios.html">Precios</a>
   </div>
   <button class="nav-cta" onclick="openDemo()">Solicitar demo</button>
@@ -451,9 +450,8 @@
 
 <!-- Mobile nav panel -->
 <div class="mobile-nav" id="mobileNav">
-  <a href="#catalogo" onclick="closeMenu()">Catálogo</a>
-  <a href="#diaspora" onclick="closeMenu()">Para inversionistas</a>
-  <a href="#crm" onclick="closeMenu()">Para inmobiliarias</a>
+  <a href="index.html" onclick="closeMenu()">Inicio</a>
+  <a href="catalogo.html" onclick="closeMenu()">Catálogo</a>
   <a href="precios.html" onclick="closeMenu()">Precios</a>
   <button class="mobile-cta" onclick="closeMenu();openDemo()">Solicitar demo</button>
 </div>
@@ -744,29 +742,6 @@ function closeMenu(){
   document.body.style.overflow='';
 }
 
-// ── Active nav link on scroll ────────────────────────────────────────────────
-(function(){
-  const sections=['catalogo','diaspora','crm'];
-  const links=document.querySelectorAll('.nav-links a');
-  const map={};
-  sections.forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) map[id]=el;
-  });
-
-  function onScroll(){
-    const scrollY=window.scrollY+120;
-    let current='';
-    sections.forEach(id=>{
-      if(map[id] && map[id].offsetTop<=scrollY) current=id;
-    });
-    links.forEach(a=>{
-      a.classList.toggle('active', a.getAttribute('href')==='#'+current);
-    });
-  }
-  window.addEventListener('scroll',onScroll,{passive:true});
-  onScroll();
-})();
 </script>
 
 </body>
