@@ -943,7 +943,7 @@ def build_pdf(path):
                 Paragraph("<b>Ezequiel Ramírez</b>", S["h2"]),
                 Paragraph("CEO &amp; Co-fundador · InmoVault", S["body_dark"]),
                 Spacer(1, 0.2*cm),
-                Paragraph("📧  ezeram94@gmail.com", S["body_dark"]),
+                Paragraph("📧  hola@inmovault.com", S["body_dark"]),
                 Paragraph("🌐  inmovault.com  (en construcción)", S["body_dark"]),
             ],
             bg_color=CREMA,

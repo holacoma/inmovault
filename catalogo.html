@@ -36,7 +36,7 @@
   .nav-links a.current::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--dorado);border-radius:2px;}
   .nav-cta{background:var(--verde-profundo);color:var(--crema);padding:10px 22px;border-radius:7px;font-size:14px;font-weight:600;border:none;cursor:pointer;transition:background 0.2s;}
   .nav-cta:hover{background:var(--verde-suave);}
-  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;min-width:44px;min-height:44px;align-items:center;justify-content:center;}
   .hamburger span{display:block;width:22px;height:2px;background:var(--verde-profundo);border-radius:2px;transition:transform 0.25s,opacity 0.25s;}
   .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   .hamburger.open span:nth-child(2){opacity:0;}
@@ -142,6 +142,12 @@
   @media(max-width:600px){
     .props-grid{grid-template-columns:1fr;}
     .footer-inner{grid-template-columns:1fr;}
+    .filter-bar{flex-direction:column;align-items:flex-start;gap:10px;padding:12px 16px;}
+    .filter-pills{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;padding-bottom:4px;flex-wrap:nowrap;}
+    .pill{flex-shrink:0;}
+    .results-info{font-size:12px;}
+    .cat-hero{padding:32px 16px 28px;}
+    .cat-hero-left h1{font-size:28px;}
   }
 </style>
 </head>
@@ -156,7 +162,7 @@
     <a href="catalogo.html" class="current">Catálogo</a>
     <a href="index.html#diaspora">Para inversionistas</a>
     <a href="index.html#crm">Para inmobiliarias</a>
-    <a href="index.html#precios">Precios</a>
+    <a href="precios.html">Precios</a>
   </div>
   <button class="nav-cta" onclick="openDemo()">Solicitar demo</button>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menú">
@@ -168,7 +174,7 @@
   <a href="catalogo.html" onclick="closeMenu()">Catálogo</a>
   <a href="index.html#diaspora" onclick="closeMenu()">Para inversionistas</a>
   <a href="index.html#crm" onclick="closeMenu()">Para inmobiliarias</a>
-  <a href="index.html#precios" onclick="closeMenu()">Precios</a>
+  <a href="precios.html" onclick="closeMenu()">Precios</a>
   <button class="mobile-cta" onclick="closeMenu();openDemo()">Solicitar demo</button>
 </div>
 
@@ -226,7 +232,7 @@
       <a href="catalogo.html">Catálogo en vivo</a>
       <a href="index.html#diaspora">Para inversionistas</a>
       <a href="index.html#crm">Para inmobiliarias</a>
-      <a href="index.html#precios">Precios</a>
+      <a href="precios.html">Precios</a>
     </div>
     <div class="footer-col">
       <h4>Recursos</h4>
@@ -235,7 +241,7 @@
     </div>
     <div class="footer-col">
       <h4>Contacto</h4>
-      <a href="mailto:ezeram94@gmail.com">ezeram94@gmail.com</a>
+      <a href="mailto:hola@inmovault.com">hola@inmovault.com</a>
     </div>
   </div>
   <div class="footer-bottom">
