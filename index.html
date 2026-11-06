@@ -458,21 +458,15 @@
 
 <!-- Demo modal -->
 <div class="modal-overlay" id="demoModal" onclick="handleOverlayClick(event)">
-  <div class="modal-box">
+  <div class="modal-box" style="height:auto;max-width:480px;">
     <div class="modal-header">
-      <div class="modal-title">
-        Propuesta de Negocio · InmoVault
-        <span class="badge">CONFIDENCIAL</span>
-      </div>
+      <div class="modal-title">Solicitar demo</div>
       <div class="modal-actions">
-        <a href="propuesta-inmovault.pdf" download class="modal-download">
-          ↓ Descargar PDF
-        </a>
         <button class="modal-close" onclick="closeDemo()" aria-label="Cerrar">×</button>
       </div>
     </div>
-    <div class="modal-body">
-      <iframe src="propuesta-inmovault.pdf#toolbar=1&navpanes=0" title="Propuesta InmoVault"></iframe>
+    <div class="modal-body" style="padding:28px 24px;line-height:1.6;">
+      <p>Escríbenos a <a href="mailto:hola@inmovault.com">hola@inmovault.com</a> y coordinamos una demo de InmoVault.</p>
     </div>
   </div>
 </div>
@@ -697,7 +691,6 @@
     </div>
     <div class="footer-col">
       <h4>Recursos</h4>
-      <a href="propuesta-inmovault.pdf" download>Propuesta de negocio</a>
       <a href="#" onclick="openDemo();return false;">Solicitar demo</a>
     </div>
     <div class="footer-col">
